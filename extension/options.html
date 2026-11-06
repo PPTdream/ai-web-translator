@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 翻译助手 · 设置</title>
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="logo">译</span>
+      <div>
+        <strong>AI 翻译助手</strong>
+        <small>术语库 · 免费 + AI</small>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-tab="general"><span>通用设置</span><em>翻译行为与样式</em></button>
+      <button class="nav-item" data-tab="ai"><span>AI 引擎</span><em>API Key 与模型</em></button>
+      <button class="nav-item" data-tab="termbase"><span>术语库</span><em>你的一亩三分地</em><b class="count" id="nav-term-count">0</b></button>
+      <button class="nav-item" data-tab="sites"><span>站点规则</span><em>自动 / 从不翻译</em></button>
+      <button class="nav-item" data-tab="data"><span>数据与备份</span><em>缓存、导入导出</em></button>
+      <button class="nav-item" data-tab="help"><span>使用帮助</span><em>快速上手</em></button>
+    </nav>
+    <div class="side-foot">
+      <div>v2.0 · 数据只存在本机</div>
+      <div id="save-state" class="save-state">已自动保存</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="page-title">通用设置</h1>
+        <p id="page-sub">决定默认怎么翻、翻成什么样</p>
+      </div>
+      <div class="top-actions">
+        <span class="hint">改动会自动保存</span>
+      </div>
+    </header>
+
+    <!-- ============ 通用 ============ -->
+    <section class="tab-panel active" id="tab-general">
+      <div class="card">
+        <div class="card-head">
+          <h2>翻译行为</h2>
+          <p>日常用免费通道，遇到不精准再点 AI 精译。</p>
+        </div>
+        <div class="grid-2">
+          <label class="field">
+            <span>默认翻译方式</span>
+            <select id="set-engine">
+              <option value="free">免费通道优先（推荐）</option>
+              <option value="ai">AI 精译优先</option>
+            </select>
+            <small>页面上仍可随时点「AI 精译」临时切换。</small>
+          </label>
+          <label class="field">
+            <span>目标语言</span>
+            <select id="set-target"></select>
+          </label>
+          <label class="field">
+            <span>显示方式</span>
+            <select id="set-mode">
+              <option value="below">原文下方（双语对照）</option>
+              <option value="above">原文上方</option>
+              <option value="replace">仅显示译文</option>
+            </select>
+            <small>「仅显示译文」在表格等特殊结构里会自动退回对照显示。</small>
+          </label>
+          <label class="field">
+            <span>免费通道</span>
+            <select id="set-free-engine"></select>
+            <small>自动选择会按腾讯 → 微软 → 谷歌 → MyMemory 依次尝试。</small>
+          </label>
+        </div>
+
+        <div class="switch-list">
+          <label class="switch-row">
+            <span><b>打开网页自动翻译</b><small>所有网站默认生效，站点规则可单独覆盖</small></span>
+            <input type="checkbox" id="set-auto">
+          </label>
+          <label class="switch-row">
+            <span><b>翻译动态加载内容</b><small>滚动加载、单页应用新出现的文字</small></span>
+            <input type="checkbox" id="set-dynamic">
+          </label>
+          <label class="switch-row">
+            <span><b>页面悬浮球</b><small>右上角显示进度，可一键 AI 精译 / 还原</small></span>
+            <input type="checkbox" id="set-floating">
+          </label>
+          <label class="switch-row">
+            <span><b>划词翻译</b><small>选中外文，自动弹出译文气泡</small></span>
+            <input type="checkbox" id="set-selection">
+          </label>
+          <label class="switch-row">
+            <span><b>按住 Alt 悬停翻译</b><small>不打断阅读，悬停段落看译文</small></span>
+            <input type="checkbox" id="set-hover">
+          </label>
+          <label class="switch-row">
+            <span><b>输入框翻译</b><small>在输入框按 Ctrl+Shift+Enter 翻译，可一键替换</small></span>
+            <input type="checkbox" id="set-input">
+          </label>
+          <label class="switch-row">
+            <span><b>翻译缓存</b><small>相同内容不重复请求，省时间也省 AI 额度</small></span>
+            <input type="checkbox" id="set-cache">
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>译文样式</h2>
+          <p>只影响插入的译文，不改动网站原文样式。</p>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <span>译文颜色</span>
+            <div class="color-row">
+              <input type="color" id="set-color" value="#1a73e8">
+              <div class="swatches">
+                <button data-color="#1a73e8" style="--c:#1a73e8" title="蓝"></button>
+                <button data-color="#0f766e" style="--c:#0f766e" title="青"></button>
+                <button data-color="#7c3aed" style="--c:#7c3aed" title="紫"></button>
+                <button data-color="#b45309" style="--c:#b45309" title="棕"></button>
+                <button data-color="#4b5563" style="--c:#4b5563" title="灰"></button>
+              </div>
+            </div>
+            <small>深色页面会自动用更亮的蓝色（仅默认蓝）。</small>
+          </div>
+          <label class="field">
+            <span>译文字号 <b id="size-val">94%</b></span>
+            <input type="range" id="set-size" min="0.8" max="1.2" step="0.02" value="0.94">
+          </label>
+          <label class="field">
+            <span>与原文的分隔</span>
+            <select id="set-separator">
+              <option value="1">细分隔线（推荐）</option>
+              <option value="0">不加分隔线</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>深色页面</span>
+            <select id="set-theme">
+              <option value="auto">自动适配</option>
+              <option value="light">始终使用设定颜色</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>高级</h2>
+          <p>一般不用改。</p>
+        </div>
+        <label class="field">
+          <span>跳过这些区域（CSS 选择器，逗号分隔）</span>
+          <input type="text" id="set-skip" placeholder="例如：nav, footer, .ad-banner, [aria-hidden='true']">
+          <small>适合金融看板、后台系统，避免翻译菜单和广告。</small>
+        </label>
+        <div class="shortcut-box">
+          <div><b>快捷键</b><span>Alt+T 翻译 / 还原 · Alt+A AI 精译 · Alt+S 翻译选中文字</span></div>
+          <button id="open-shortcuts" class="btn ghost small">修改快捷键</button>
+        </div>
+        <p class="tip">Edge 137+ 若手动安装扩展，可能需要先在 <code>edge://extensions</code> 打开「开发人员模式」。扩展更新后，已打开的旧标签页建议刷新一次。</p>
+      </div>
+    </section>
+
+    <!-- ============ AI ============ -->
+    <section class="tab-panel" id="tab-ai">
+      <div class="card">
+        <div class="card-head">
+          <h2>选择 AI 服务商</h2>
+          <p>用你已有的订阅或 API Key。日常免费，想让译文更准的时候再走 AI。</p>
+        </div>
+        <div class="provider-grid" id="provider-grid"></div>
+        <div class="preset-hint" id="preset-hint"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>连接配置</h2>
+          <p>Key 只保存在这台电脑的扩展本地存储里，不会上传到任何第三方服务器。</p>
+        </div>
+        <div class="grid-2">
+          <label class="field span-2">
+            <span>API Key</span>
+            <div class="key-row">
+              <input type="password" id="set-key" placeholder="粘贴你的 API Key" autocomplete="off" spellcheck="false">
+              <button id="toggle-key" class="btn ghost small" type="button">显示</button>
+            </div>
+          </label>
+          <input type="file" id="import-opencode-file" accept=".json,application/json" hidden>
+          <div class="span-2 opc-import">
+            <button id="btn-import-opencode" class="btn ghost small" type="button">从 OpenCode 导入 Key</button>
+            <span>读取本机 <code>%USERPROFILE%\.local\share\opencode\auth.json</code>，只取 OpenCode Go 的 Key，不上传。</span>
+          </div>
+          <label class="field">
+            <span>接口地址（Base URL）</span>
+            <input type="text" id="set-base" placeholder="https://api.example.com/v1" spellcheck="false">
+          </label>
+          <label class="field">
+            <span>模型名</span>
+            <input type="text" id="set-model" placeholder="deepseek-chat" spellcheck="false">
+          </label>
+        </div>
+        <div class="row-actions">
+          <button id="btn-test" class="btn primary">测试连接</button>
+          <a id="preset-docs" class="btn ghost" target="_blank" rel="noopener" hidden>获取 API Key ↗</a>
+          <span id="test-result" class="test-result"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>高级参数</h2>
+          <p>默认值适合大多数网页翻译。</p>
+        </div>
+        <div class="grid-2">
+          <label class="field">
+            <span>温度 <b id="temp-val">0.2</b></span>
+            <input type="range" id="set-temp" min="0" max="1" step="0.1" value="0.2">
+            <small>越低越稳定，术语一致性更好。</small>
+          </label>
+          <label class="field">
+            <span>每批段落数</span>
+            <input type="number" id="set-batch" min="4" max="20" step="1" value="12">
+            <small>报「输出被截断」时调小。</small>
+          </label>
+        </div>
+        <label class="switch-row">
+          <span><b>自动 AI 补译</b><small>免费结果疑似没翻好时，自动用 AI 重译那几段（会消耗额度）</small></span>
+          <input type="checkbox" id="set-autoupgrade">
+        </label>
+        <label class="field">
+          <span>自定义提示词（可选）</span>
+          <textarea id="set-prompt" rows="7" placeholder="留空使用内置规则：保留 AI 术语、保护代码、按领域选译法、只输出 JSON。填写后会替换内置规则，但输出格式仍由扩展控制。"></textarea>
+          <small>内置规则已经包含你原来的 AI 术语翻译原则，通常不需要改。</small>
+        </label>
+      </div>
+    </section>
+
+    <!-- ============ 术语库 ============ -->
+    <section class="tab-panel" id="tab-termbase">
+      <div class="stats-row">
+        <div class="stat"><b id="stat-total">0</b><span>全部条目</span></div>
+        <div class="stat"><b id="stat-enabled">0</b><span>已启用</span></div>
+        <div class="stat"><b id="stat-cats">0</b><span>分类</span></div>
+        <div class="stat note"><span>免费翻译用占位符保护术语；AI 翻译会把术语写进提示词。</span></div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <input type="search" id="term-search" class="search" placeholder="搜索原文 / 译法 / 分类…">
+          <select id="term-category" class="compact"><option value="">全部分类</option></select>
+          <button id="btn-add-term" class="btn primary small">＋ 新增术语</button>
+          <button id="btn-import" class="btn ghost small">导入</button>
+          <button id="btn-export-csv" class="btn ghost small">导出 CSV</button>
+          <button id="btn-export-json" class="btn ghost small">导出 JSON</button>
+          <button id="btn-term-more" class="btn ghost small">更多 ▾</button>
+          <div class="menu" id="term-more-menu" hidden>
+            <button id="btn-merge-default">补齐内置术语</button>
+            <button id="btn-clear-terms" class="danger">清空术语库</button>
+          </div>
+        </div>
+
+        <div class="add-form" id="add-form" hidden>
+          <div class="grid-2">
+            <label class="field"><span>原文 / 英文</span><input type="text" id="new-source" placeholder="例如 Agent"></label>
+            <label class="field"><span>译法</span><input type="text" id="new-target" placeholder="留空 = 保留原文"></label>
+            <label class="field"><span>策略</span>
+              <select id="new-policy">
+                <option value="keep">保留英文原文</option>
+                <option value="translate">强制使用指定译法</option>
+              </select>
+            </label>
+            <label class="field"><span>分类</span><input type="text" id="new-category" placeholder="AI / 金融 / 社媒 / 自定义"></label>
+            <label class="field span-2"><span>备注（可选）</span><input type="text" id="new-note" placeholder="为什么这样译，方便以后自己回忆"></label>
+          </div>
+          <div class="row-actions">
+            <button id="btn-save-term" class="btn primary small">添加</button>
+            <button id="btn-cancel-term" class="btn ghost small">取消</button>
+            <span class="form-hint" id="term-form-hint"></span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="term-table">
+            <thead>
+              <tr>
+                <th class="col-on">启用</th>
+                <th>原文 / 英文</th>
+                <th>译法 / 中文</th>
+                <th class="col-policy">策略</th>
+                <th class="col-cat">分类</th>
+                <th class="col-note">备注</th>
+                <th class="col-del"></th>
+              </tr>
+            </thead>
+            <tbody id="term-body"></tbody>
+          </table>
+          <div class="empty" id="term-empty" hidden>没有匹配的术语。</div>
+        </div>
+
+        <div class="pager">
+          <span id="term-page-info">0 条</span>
+          <div>
+            <button id="term-prev" class="btn ghost small">上一页</button>
+            <button id="term-next" class="btn ghost small">下一页</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 站点 ============ -->
+    <section class="tab-panel" id="tab-sites">
+      <div class="card">
+        <div class="card-head">
+          <h2>站点规则</h2>
+          <p>优先于全局「自动翻译」。支持子域名，例如 <code>news.example.com</code> 会继承 <code>example.com</code> 的规则。</p>
+        </div>
+        <label class="switch-row">
+          <span><b>全局自动翻译</b><small>打开所有网站时自动翻译（不建议一直开，会消耗免费通道请求）</small></span>
+          <input type="checkbox" id="set-auto-2">
+        </label>
+        <div class="inline-form">
+          <input type="text" id="site-domain" placeholder="example.com">
+          <select id="site-mode" class="compact">
+            <option value="auto">始终自动翻译</option>
+            <option value="never">从不自动翻译</option>
+          </select>
+          <button id="btn-add-site" class="btn primary small">添加</button>
+          <button id="btn-current-site" class="btn ghost small">使用当前网站</button>
+        </div>
+        <table class="site-table">
+          <thead><tr><th>域名</th><th>规则</th><th></th></tr></thead>
+          <tbody id="site-body"></tbody>
+        </table>
+        <div class="empty" id="site-empty" hidden>还没有站点规则。手动翻译不受规则影响。</div>
+      </div>
+    </section>
+
+    <!-- ============ 数据 ============ -->
+    <section class="tab-panel" id="tab-data">
+      <div class="card">
+        <div class="card-head"><h2>翻译缓存</h2><p>缓存只存译文，不存网页内容；清空不影响术语库和设置。</p></div>
+        <div class="data-row">
+          <div><b id="cache-count">0</b><span> 条缓存译文</span></div>
+          <button id="btn-clear-cache" class="btn ghost small">清空缓存</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>导出 / 导入</h2><p>换电脑或重装扩展时，用备份恢复设置和术语库。</p></div>
+        <div class="data-row">
+          <div>导出设置（可选包含 API Key）<label class="check"><input type="checkbox" id="export-key"> 包含 Key</label></div>
+          <button id="btn-export-settings" class="btn ghost small">导出设置 JSON</button>
+        </div>
+        <div class="data-row">
+          <div>导入设置与术语库</div>
+          <button id="btn-import-settings" class="btn ghost small">选择备份文件</button>
+          <input type="file" id="import-settings-file" accept=".json" hidden>
+        </div>
+        <div class="data-row">
+          <div>只导出术语库</div>
+          <button id="btn-data-terms-csv" class="btn ghost small">CSV</button>
+          <button id="btn-data-terms-json" class="btn ghost small">JSON</button>
+        </div>
+      </div>
+
+      <div class="card danger-card">
+        <div class="card-head"><h2>重置</h2><p>会删除设置、术语库和缓存，操作前请先导出备份。</p></div>
+        <button id="btn-reset" class="btn danger">恢复默认设置与术语库</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>隐私</h2></div>
+        <p class="prose">免费翻译会把待翻译文本发送到腾讯 / 微软 / 谷歌 / MyMemory 的公共翻译接口；AI 精译会把文本发送到你配置的 AI 服务商。API Key 只保存在本机扩展存储中。涉及未公开财务数据、内部文档时，建议关闭自动翻译，或只使用你信任的 AI 接口。</p>
+      </div>
+    </section>
+
+    <!-- ============ 帮助 ============ -->
+    <section class="tab-panel" id="tab-help">
+      <div class="card welcome-card" id="welcome-card" hidden>
+        <h2>装好了，先做这三件事</h2>
+        <ol class="steps">
+          <li><b>刷新一下当前网页</b>，然后点工具栏的「译」图标，试一次「翻译此页」。</li>
+          <li>到「AI 引擎」点「从 OpenCode 导入 Key」，选本机 <code>auth.json</code>；没有 Key 也能一直用免费通道。</li>
+          <li>把常用的专业词加到「术语库」，免费和 AI 翻译都会遵守。</li>
+        </ol>
+        <div class="row-actions">
+          <button class="btn primary small jump" data-jump="ai">去配置 AI</button>
+          <button class="btn ghost small jump" data-jump="termbase">打开术语库</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>三种翻译方式</h2></div>
+        <div class="help-grid">
+          <div>
+            <h3>整页翻译</h3>
+            <p>点扩展图标 →「翻译此页」，或按 <code>Alt+T</code>。外文段落下方插入译文，原文保留。再按一次还原。</p>
+          </div>
+          <div>
+            <h3>AI 精译</h3>
+            <p>免费译文不够准、术语翻错、长句读不通时，点「AI 精译」用你的模型重翻整页；划词气泡和输入框也可以单独 AI 精译。</p>
+          </div>
+          <div>
+            <h3>划词 / 悬停 / 输入框</h3>
+            <p>选中文字自动出气泡；按住 Alt 悬停看段落译文；在输入框按 <code>Ctrl+Shift+Enter</code> 翻译并替换。</p>
+          </div>
+          <div>
+            <h3>动态内容</h3>
+            <p>社媒、素材站、单页应用滚动加载的新内容会自动补译。若页面结构太复杂，刷新后重新翻译一次即可。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>术语库怎么起作用</h2></div>
+        <div class="help-grid">
+          <div>
+            <h3>免费通道</h3>
+            <p>先把术语替换成占位符，翻译完再还原：<b>保留英文</b>的术语不会被翻成中文，<b>指定译法</b>的术语会强制变成你写的词。</p>
+          </div>
+          <div>
+            <h3>AI 通道</h3>
+            <p>把命中的术语作为「必须遵守」写进提示词，同时带上页面标题和域名，让模型按 AI / 金融 / 社媒语境选译法。</p>
+          </div>
+          <div>
+            <h3>维护建议</h3>
+            <p>只收「翻错会很难受」的词：模型名、产品名、指标名、行业黑话。太普通的词别加，否则会干扰正常句子。</p>
+          </div>
+          <div>
+            <h3>右键添加</h3>
+            <p>网页上选中一个词 → 右键「将选中文字加入术语库…」，会直接打开新增表单。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>常见问题</h2></div>
+        <details><summary>OpenCode Go 怎么接？</summary><p>设置 → AI 引擎，默认已经选中 OpenCode Go / GLM-5.3-Flash。点「从 OpenCode 导入 Key」，选择本机 <code>%USERPROFILE%\.local\share\opencode\auth.json</code>，再点「测试连接」。Key 只存本机；也可以在 OpenCode Console 手动复制 Key 粘贴。</p></details>
+        <details><summary>免费翻译和 AI 翻译，平时怎么选？</summary><p>默认免费。AI 类、金融类、长文、术语密集的页面，或者免费结果明显读不懂时，点「AI 精译」。建议在 AI 引擎里打开「自动 AI 补译」，只在免费结果疑似失败时花钱。</p></details>
+        <details><summary>为什么有的网页没有翻译按钮？</summary><p>Edge 内置页（edge://）、扩展商店、PDF 阅读器不允许扩展注入脚本。普通 http/https 网页都可以。</p></details>
+        <details><summary>更新扩展后旧标签页没反应？</summary><p>刷新页面即可。Edge 137+ 手动加载扩展时，需要在 <code>edge://extensions</code> 打开开发人员模式；已加载过的扩展重启浏览器后通常还在。</p></details>
+        <details><summary>免费通道提示失败？</summary><p>腾讯通道国内直连最稳；微软、谷歌可能受网络影响。可在「通用设置 → 免费通道」手动指定，或配置 AI 作为备用。</p></details>
+        <details><summary>AI 报 401 / 404 / 429？</summary><p>401 是 Key 不对；404 多是接口地址或模型名不对；429 是额度/频率限制。先在「AI 引擎」点测试连接，再按提示检查。</p></details>
+        <details><summary>译文影响网站布局？</summary><p>极少数卡片/导航会。可切换「仅显示译文」、减少术语条目，或在该网站用划词翻译。欢迎把具体网址记下来，后续针对适配。</p></details>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>快捷键</h2></div>
+        <table class="kv">
+          <tr><td><code>Alt+T</code></td><td>翻译 / 还原当前页面</td></tr>
+          <tr><td><code>Alt+A</code></td><td>AI 精译当前页面</td></tr>
+          <tr><td><code>Alt+S</code></td><td>翻译当前选中文字</td></tr>
+          <tr><td><code>Ctrl+Shift+Enter</code></td><td>翻译输入框内容</td></tr>
+          <tr><td><code>Esc</code></td><td>关闭气泡 / 弹层</td></tr>
+        </table>
+        <p class="tip">在 <code>edge://extensions/shortcuts</code> 可以改快捷键。</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 导入术语库弹窗 -->
+<div class="modal" id="import-modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>导入术语库</h2>
+      <button class="modal-close" data-close="import-modal">×</button>
+    </div>
+    <p class="modal-sub">支持 CSV / TSV / JSON，也支持每行「英文=中文」。CSV 表头可以是：原文,译法,策略,分类,备注。</p>
+    <div class="modal-body">
+      <label class="field">
+        <span>选择文件</span>
+        <input type="file" id="import-file" accept=".csv,.tsv,.txt,.json">
+      </label>
+      <label class="field">
+        <span>或者直接粘贴内容</span>
+        <textarea id="import-text" rows="9" placeholder="Agent,Agent,保留英文,AI&#10;Function Calling,函数调用,指定译法,AI"></textarea>
+      </label>
+      <div class="radio-row">
+        <label><input type="radio" name="import-mode" value="merge" checked> 追加并更新重复项</label>
+        <label><input type="radio" name="import-mode" value="replace"> 替换现有术语库</label>
+      </div>
+      <div class="form-hint" id="import-preview">等待选择文件或粘贴内容…</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" data-close="import-modal">取消</button>
+      <button class="btn primary" id="btn-do-import">开始导入</button>
+    </div>
+  </div>
+</div>
+
+<script src="lib/constants.js"></script>
+<script src="lib/default-terms.js"></script>
+<script src="lib/termbase.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

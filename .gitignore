@@ -1,0 +1,25 @@
+# 扩展打包产物与敏感文件
+*.crx
+*.pem
+*.key
+*.bak
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 依赖
+node_modules/
+vendor/
+
+# 本地环境
+.env
+.env.*
+*.local
+
+# 临时截图 / 测试产物
+test-output/
+test-screenshots/
+*.tmp

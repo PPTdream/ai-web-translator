@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 翻译助手</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="head">
+      <div class="brand">
+        <span class="logo">译</span>
+        <div class="titles">
+          <h1>AI 翻译助手</h1>
+          <p id="site" class="sub">读取当前网页…</p>
+        </div>
+      </div>
+      <button id="open-settings" class="icon-btn" title="打开设置" aria-label="打开设置">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M4 7h9M18 7h2M4 17h2M10 17h10"></path>
+          <circle cx="15.5" cy="7" r="2.2"></circle>
+          <circle cx="7.5" cy="17" r="2.2"></circle>
+        </svg>
+      </button>
+    </header>
+
+    <div class="status-row">
+      <span id="engine-badge" class="badge free">免费通道</span>
+      <span id="status" class="status">就绪</span>
+      <button id="status-action" class="link-btn" hidden>去设置</button>
+    </div>
+
+    <button id="btn-translate" class="primary">翻译此页</button>
+    <button id="btn-alt" class="secondary">AI 精译</button>
+
+    <div class="grid">
+      <label class="field">
+        <span>目标语言</span>
+        <select id="target"></select>
+      </label>
+      <label class="field">
+        <span>显示方式</span>
+        <select id="mode">
+          <option value="below">原文下方</option>
+          <option value="above">原文上方</option>
+          <option value="replace">仅显示译文</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="toggles">
+      <label class="switch-row">
+        <span>划词翻译</span>
+        <input type="checkbox" id="selection">
+      </label>
+      <label class="switch-row">
+        <span>自动翻译本站</span>
+        <input type="checkbox" id="auto-site">
+      </label>
+      <label class="switch-row">
+        <span>翻译动态加载内容</span>
+        <input type="checkbox" id="dynamic">
+      </label>
+    </div>
+
+    <div class="terms">
+      <span>术语库 <b id="term-count">0</b> 条</span>
+      <button id="manage-terms" class="link-btn">管理术语库 →</button>
+    </div>
+
+    <footer class="foot">
+      <button id="help" class="link-btn">使用帮助</button>
+      <span>Alt+T 翻译 · Alt+A AI</span>
+    </footer>
+  </div>
+
+  <script src="lib/constants.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

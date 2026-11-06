@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "AI 网页翻译助手",
+  "version": "2.0.0",
+  "description": "免费整页双语翻译 + AI 精译 + 本地术语库。适配 AI、金融、社媒与素材网站，支持划词、悬停、输入框翻译。",
+  "minimum_chrome_version": "110",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "scripting",
+    "tabs",
+    "contextMenus",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    },
+    "default_title": "AI 网页翻译助手"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "commands": {
+    "toggle-translate": {
+      "suggested_key": { "default": "Alt+T" },
+      "description": "翻译 / 还原当前页面"
+    },
+    "ai-refine": {
+      "suggested_key": { "default": "Alt+A" },
+      "description": "用 AI 精译当前页面"
+    },
+    "translate-selection": {
+      "suggested_key": { "default": "Alt+S" },
+      "description": "翻译当前选中的文字"
+    }
+  }
+}
